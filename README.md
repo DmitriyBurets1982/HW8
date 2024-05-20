@@ -1,19 +1,19 @@
-# При необходимости дополнительно установить Ingress-Nginx Controller
+# РџСЂРё РЅРµРѕР±С…РѕРґРёРјРѕСЃС‚Рё РґРѕРїРѕР»РЅРёС‚РµР»СЊРЅРѕ СѓСЃС‚Р°РЅРѕРІРёС‚СЊ Ingress-Nginx Controller
 helm upgrade --install ingress-nginx ingress-nginx --repo https://kubernetes.github.io/ingress-nginx --namespace ingress-nginx --create-namespace
 
-или
+РёР»Рё
 
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.10.1/deploy/static/provider/cloud/deploy.yaml
 
 
-# Команды и результат
-helm install hw8 k8s
-дождаться полной инициализации контейнера RabbitMQ и MassTransit в сервисах (~2 мин)
-newman run HW8.postman_collection
-helm uninstall hw8
+# РљРѕРјР°РЅРґС‹ Рё СЂРµР·СѓР»СЊС‚Р°С‚
+helm install hw8 k8s </br>
+РґРѕР¶РґР°С‚СЊСЃСЏ РїРѕР»РЅРѕР№ РёРЅРёС†РёР°Р»РёР·Р°С†РёРё РєРѕРЅС‚РµР№РЅРµСЂР° RabbitMQ Рё MassTransit РІ СЃРµСЂРІРёСЃР°С… (~2 РјРёРЅ) </br>
+newman run HW8.postman_collection </br>
+helm uninstall hw8 </br>
 
-Результаты выполнения приложены в файлах newman_1.png и newman_2.png
+Р РµР·СѓР»СЊС‚Р°С‚С‹ РІС‹РїРѕР»РЅРµРЅРёСЏ РїСЂРёР»РѕР¶РµРЅС‹ РІ С„Р°Р№Р»Р°С… newman_1.png Рё newman_2.png
 
 
-# Описание архитектурного решения
-Механизм распределенной транзакции реализован на основе Саги (OrderStateMachine // MassTransit.RabbitMQ)
+# РћРїРёСЃР°РЅРёРµ Р°СЂС…РёС‚РµРєС‚СѓСЂРЅРѕРіРѕ СЂРµС€РµРЅРёСЏ
+РњРµС…Р°РЅРёР·Рј СЂР°СЃРїСЂРµРґРµР»РµРЅРЅРѕР№ С‚СЂР°РЅР·Р°РєС†РёРё СЂРµР°Р»РёР·РѕРІР°РЅ РЅР° РѕСЃРЅРѕРІРµ РЎР°РіРё (OrderStateMachine // MassTransit.RabbitMQ)
