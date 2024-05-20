@@ -1,0 +1,43 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: hw8-stockservice-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hw8-stockservice
+  template:
+    metadata:
+      labels:
+        app: hw8-stockservice
+    spec:
+      containers:
+        - name: hw8-stockservice
+          image: dmitriyburets1982/hw8-stockservice:latest
+          imagePullPolicy: Always
+          readinessProbe:
+            httpGet:
+              path: /stockservice/health
+              port: 8080
+            initialDelaySeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /stockservice/health
+              port: 8080
+            initialDelaySeconds: 5
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hw8-stockservice-service
+spec:
+  type: NodePort
+  selector:
+    app: hw8-stockservice
+  ports:
+    - name: hw8-stockservice
+      protocol: TCP
+      port: 80
+      targetPort: 8080

@@ -1,0 +1,57 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: hw8-deliveryservice-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hw8-deliveryservice
+  template:
+    metadata:
+      labels:
+        app: hw8-deliveryservice
+    spec:
+      containers:
+        - name: hw8-deliveryservice
+          image: dmitriyburets1982/hw8-deliveryservice:latest
+          imagePullPolicy: Always
+          readinessProbe:
+            httpGet:
+              path: /deliveryservice/health
+              port: 8080
+            initialDelaySeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /deliveryservice/health
+              port: 8080
+            initialDelaySeconds: 5
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hw8-deliveryservice-clusterip-srv
+spec:
+  type: ClusterIP
+  selector:
+    app: hw8-deliveryservice
+  ports:
+  - name: hw8-deliveryservice
+    protocol: TCP
+    port: 80
+    targetPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hw8-deliveryservice-service
+spec:
+  type: NodePort
+  selector:
+    app: hw8-deliveryservice
+  ports:
+    - name: hw8-deliveryservice
+      protocol: TCP
+      port: 80
+      targetPort: 8080
